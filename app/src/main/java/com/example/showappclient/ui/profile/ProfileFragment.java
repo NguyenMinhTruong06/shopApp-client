@@ -1,0 +1,94 @@
+package com.example.showappclient.ui.profile;
+
+import androidx.lifecycle.ViewModelProvider;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.example.showappclient.MainMenuFragment;
+import com.example.showappclient.R;
+import com.example.showappclient.ui.auth.login.LoginFragment;
+import com.example.showappclient.ui.home.HomeFragment;
+
+public class ProfileFragment extends Fragment {
+
+    private ProfileViewModel mViewModel;
+    private LinearLayout textLogout;
+    private ImageView imgLeft;
+
+
+
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        textLogout = view.findViewById(R.id.text_logout);
+        imgLeft = view.findViewById(R.id.image_left);
+
+
+
+        imgLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainMenuFragment mainMenuFragment=new MainMenuFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, mainMenuFragment)
+                        .commit();
+            }
+        });
+
+        textLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLogoutConfirmationDialog();
+
+            }
+        });
+
+
+    }
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Bạn có chắc chắn muốn thoát?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoginFragment loginFragment = new LoginFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, loginFragment)
+                        .commit();
+                }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog if "No" is clicked
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+}
