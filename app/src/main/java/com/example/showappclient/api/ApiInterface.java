@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -17,6 +18,9 @@ public interface ApiInterface {
     Call<AuthResponse> login(@Body UserRequest loginRequest);
     @POST("/api/v1/users/register")
     Call<AuthResponse> signup(@Body UserRequest signupRequest);
+
+    @PUT("/api/v1/users/update")
+    Call<AuthResponse> update(@Body UserRequest updateRequest);
 
     @GET("/api/v1/products/all")
     Call<ProductResponse> getAllProduct(@Query("limit") int limit, @Query("page") int page);

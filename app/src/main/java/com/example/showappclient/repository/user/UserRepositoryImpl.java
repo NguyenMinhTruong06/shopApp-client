@@ -16,4 +16,9 @@ public class UserRepositoryImpl implements UserRepository {
     public Call<AuthResponse> signup(UserRequest userRequest) {
         return RetrofitClient.getApiService().signup(userRequest);
     }
+    @Override
+    public Call<AuthResponse> update(UserRequest userRequest) {
+        return RetrofitClient.getApiService().update(userRequest);
+    }
+
 }

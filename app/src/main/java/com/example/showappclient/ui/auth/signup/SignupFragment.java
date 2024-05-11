@@ -130,7 +130,6 @@ public class SignupFragment extends Fragment {
             @Override
             public void onChanged(Map<String, String> data) {
                 if (data.get("successful") != null) {
-//                    RetrofitClient.updateAccessToken(data.get("successful"));
                     LoginFragment loginFragment = new LoginFragment();
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.root, loginFragment)

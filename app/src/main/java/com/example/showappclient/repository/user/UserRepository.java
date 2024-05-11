@@ -13,4 +13,6 @@ public interface UserRepository {
      public Call<AuthResponse> login(UserRequest userRequest);
 
     public Call<AuthResponse> signup(UserRequest userRequest);
+
+    Call<AuthResponse> update(UserRequest userRequest);
 }

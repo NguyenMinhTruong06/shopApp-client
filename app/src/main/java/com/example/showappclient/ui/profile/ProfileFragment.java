@@ -20,12 +20,13 @@ import com.example.showappclient.MainMenuFragment;
 import com.example.showappclient.R;
 import com.example.showappclient.ui.auth.login.LoginFragment;
 import com.example.showappclient.ui.home.HomeFragment;
+import com.example.showappclient.ui.profile.update.UpdateProfileFragment;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
     private LinearLayout textLogout;
-    private ImageView imgLeft;
+    private ImageView imgLeft,imageUpdate;
 
 
 
@@ -44,9 +45,18 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         textLogout = view.findViewById(R.id.text_logout);
         imgLeft = view.findViewById(R.id.image_left);
+        imageUpdate = view.findViewById(R.id.image_update);
 
 
-
+        imageUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateProfileFragment updateProfileFragment=new UpdateProfileFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, updateProfileFragment)
+                        .commit();
+            }
+        });
         imgLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
