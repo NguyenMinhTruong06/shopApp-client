@@ -53,6 +53,7 @@
 
             <ImageView
                 android:id="@+id/image_avatar"
+                android:src="@drawable/account_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.cardview.widget.CardView>
@@ -165,11 +166,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_address" />
 
             <TextView
-                android:id="@+id/text_email"
+                android:id="@+id/text_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Email"
+                android:text="Phone"
                 android:textColor="@color/primary"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/edit_address"
@@ -177,7 +178,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edit_address" />
 
             <EditText
-                android:id="@+id/edit_email"
+                android:id="@+id/edit_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -185,8 +186,8 @@
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/edit_address"
-                app:layout_constraintStart_toStartOf="@+id/text_email"
-                app:layout_constraintTop_toBottomOf="@+id/text_email" />
+                app:layout_constraintStart_toStartOf="@+id/text_phone"
+                app:layout_constraintTop_toBottomOf="@+id/text_phone" />
 
             <TextView
                 android:id="@+id/text_update_profile"
@@ -203,9 +204,9 @@
                 android:textColor="@color/white"
                 android:textSize="19dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/edit_email"
-                app:layout_constraintStart_toStartOf="@+id/edit_email"
-                app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+                app:layout_constraintEnd_toEndOf="@+id/edit_phone"
+                app:layout_constraintStart_toStartOf="@+id/edit_phone"
+                app:layout_constraintTop_toBottomOf="@+id/edit_phone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

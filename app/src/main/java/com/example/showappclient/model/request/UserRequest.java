@@ -37,6 +37,9 @@ public class UserRequest {
         this.dateOfBirth=dateOfBirth;
         this.address=address;
     }
+    public UserRequest(){
+
+    }
 
 
 }

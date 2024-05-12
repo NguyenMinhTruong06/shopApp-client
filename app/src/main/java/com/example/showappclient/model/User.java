@@ -3,34 +3,25 @@ package com.example.showappclient.model;
 import java.time.LocalDate;
 import com.google.gson.annotations.SerializedName;
 
+import retrofit2.http.Query;
+
 public class User {
-    @SerializedName( "id")
             private Long id;
 
-    @SerializedName( "fullname")
     private String fullName;
-
-    @SerializedName(  "phone_number")
     private String phoneNumber;
 
-    @SerializedName(  "address")
     private String address;
 
-    @SerializedName(  "password")
     private String password;
-    @SerializedName( "is_active")
     private Integer isActive;
 
-    @SerializedName(  "date_of_birth")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
-    @SerializedName(  "fb_account_id")
     private Long fbAccountId;
 
-    @SerializedName( "gg_account_id")
     private Long ggAccountId;
 
-    @SerializedName(  "role_id")
     private Role role;
 
     public Long getId() {
@@ -81,11 +72,11 @@ public class User {
         this.isActive = isActive;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

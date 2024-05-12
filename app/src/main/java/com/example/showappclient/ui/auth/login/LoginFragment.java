@@ -117,7 +117,7 @@ public class LoginFragment extends Fragment {
             public void onChanged(Map<String, String> data) {
                 if(data.get("successful")!=null){
                     RetrofitClient.updateAccessToken(data.get("successful"));
-//                    HomeFragment positiveFragment = new HomeFragment();
+
                     MainMenuFragment mainMenuFragment=new MainMenuFragment();
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.root, mainMenuFragment)

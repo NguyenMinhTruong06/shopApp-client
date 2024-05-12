@@ -1,5 +1,6 @@
 package com.example.showappclient.repository.user;
 
+import com.example.showappclient.model.User;
 import com.example.showappclient.model.request.UserRequest;
 import com.example.showappclient.model.response.AuthResponse;
 
@@ -14,5 +15,8 @@ public interface UserRepository {
 
     public Call<AuthResponse> signup(UserRequest userRequest);
 
-    Call<AuthResponse> update(UserRequest userRequest);
+    public Call<AuthResponse> update(UserRequest userRequest);
+
+    public Call<User>getUser();
+
 }

@@ -1,5 +1,6 @@
 package com.example.showappclient.ui.profile;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -15,23 +16,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.showappclient.MainMenuFragment;
 import com.example.showappclient.R;
+import com.example.showappclient.model.User;
 import com.example.showappclient.ui.auth.login.LoginFragment;
 import com.example.showappclient.ui.home.HomeFragment;
+import com.example.showappclient.ui.product.ProductViewModel;
 import com.example.showappclient.ui.profile.update.UpdateProfileFragment;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
     private LinearLayout textLogout;
-    private ImageView imgLeft,imageUpdate;
-
+    private TextView tvUserName, tvPhoneNumber;
+    private ImageView imgLeft, imageUpdate;
 
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel =new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory()).get(ProfileViewModel.class);
     }
 
     @Override
@@ -46,21 +56,26 @@ public class ProfileFragment extends Fragment {
         textLogout = view.findViewById(R.id.text_logout);
         imgLeft = view.findViewById(R.id.image_left);
         imageUpdate = view.findViewById(R.id.image_update);
+        tvUserName=view.findViewById(R.id.text_name);
+        tvPhoneNumber=view.findViewById(R.id.text_phone);
 
-
+        initViewModel();
+        mViewModel.getUser();
         imageUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UpdateProfileFragment updateProfileFragment=new UpdateProfileFragment();
+                UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.root, updateProfileFragment)
+                        .addToBackStack("ProfileFragment")
                         .commit();
+
             }
         });
         imgLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainMenuFragment mainMenuFragment=new MainMenuFragment();
+                MainMenuFragment mainMenuFragment = new MainMenuFragment();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.root, mainMenuFragment)
                         .commit();
@@ -77,6 +92,17 @@ public class ProfileFragment extends Fragment {
 
 
     }
+
+    private void initViewModel() {
+        mViewModel.user.observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                tvUserName.setText(user.getFullName());
+                tvPhoneNumber.setText(user.getPhoneNumber());
+            }
+        });
+    }
+
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Đăng xuất");
@@ -88,7 +114,7 @@ public class ProfileFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.root, loginFragment)
                         .commit();
-                }
+            }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
