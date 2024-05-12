@@ -59,11 +59,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/image_pro"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager_product_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter" />
+                android:background="@color/background"
+                app:layout_constraintDimensionRatio="w, 1:2" />
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/circleindicator"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="275dp"
+                app:ci_drawable="@drawable/bg_indicator" />
         </androidx.cardview.widget.CardView>
 
         <ImageView
@@ -180,17 +189,17 @@
                 android:textColor="@color/secondaryDeep"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="@id/text_info"
-                app:layout_constraintStart_toStartOf="@id/text_info"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_ma" />
 
             <TextView
                 android:id="@+id/text_author"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/author"
+                android:text=""
                 android:textColor="@color/secondaryDeep"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="@id/text_ncc"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_ncc" />
 
             <TextView

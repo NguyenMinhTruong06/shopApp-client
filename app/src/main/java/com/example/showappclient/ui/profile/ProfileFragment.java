@@ -75,10 +75,7 @@ public class ProfileFragment extends Fragment {
         imgLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainMenuFragment mainMenuFragment = new MainMenuFragment();
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.root, mainMenuFragment)
-                        .commit();
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

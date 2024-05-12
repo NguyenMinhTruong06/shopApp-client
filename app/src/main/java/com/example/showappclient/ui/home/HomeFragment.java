@@ -30,10 +30,12 @@ import android.widget.Toast;
 import com.example.showappclient.R;
 import com.example.showappclient.model.Product;
 import com.example.showappclient.model.response.ProductResponse;
+import com.example.showappclient.ui.adapter.OnItemClickListener;
 import com.example.showappclient.ui.adapter.ProductListAdapter;
 import com.example.showappclient.ui.auth.login.LoginViewModel;
 import com.example.showappclient.ui.auth.signup.SignupFragment;
 import com.example.showappclient.ui.cart.CartFragment;
+import com.example.showappclient.ui.product.ProductFragment;
 import com.example.showappclient.ui.product.ProductViewModel;
 import com.example.showappclient.ui.profile.ProfileFragment;
 import com.example.showappclient.ui.search.SearchFragment;
@@ -49,16 +51,18 @@ public class HomeFragment extends Fragment {
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
+
     private RecyclerView recyclerViewNewArrival;
     private ProductListAdapter productListAdapter;
     //private RecyclerView recyclerViewCategory;
     private RecyclerView recyclerViewProduct;
-     private ImageView imgProfile;
-    public List<Product> products=new ArrayList<>();
+    private ImageView imgProfile;
+    public List<Product> products = new ArrayList<>();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel =new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory()).get(ProductViewModel.class);
+        mViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory()).get(ProductViewModel.class);
 
     }
 
@@ -75,8 +79,8 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-
-        productListAdapter=new ProductListAdapter();
+        initVieModel();
+        productListAdapter = new ProductListAdapter();
         recyclerViewNewArrival = view.findViewById(R.id.recyclerview_newarrival);
         imgProfile = view.findViewById(R.id.image_profile);
         recyclerViewProduct = view.findViewById(R.id.recyclerview_product);
@@ -84,7 +88,7 @@ public class HomeFragment extends Fragment {
         recyclerViewProduct.setAdapter(productListAdapter);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.getAllProduct(20, 0);
-        initVieModel();
+
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,10 +98,24 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+        productListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Product product = productListAdapter.getProduct(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", product);
+                ProductFragment fragment = new ProductFragment();
+                fragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, fragment)
+                        .addToBackStack("HomeFragment")
+                        .commit();
+            }
+        });
 
     }
 
-    private void initVieModel(){
+    private void initVieModel() {
 
         mViewModel.products.observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override

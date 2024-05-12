@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/item_product"
     android:layout_marginBottom="7dp">
 
     <androidx.cardview.widget.CardView
@@ -85,7 +86,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:text="x10"
+        android:text=""
         android:textColor="@color/primary"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,16 +103,6 @@
     <!--        app:layout_constraintEnd_toEndOf="@id/text_quantity"-->
     <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:id="@+id/text_quantity_sold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Đã bán"
-        android:textColor="@color/gray"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/text_quantity"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view_line"

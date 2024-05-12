@@ -3,9 +3,11 @@ package com.example.showappclient.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.List;
 
-public class Product {
+public class Product implements Serializable {
     private String name;
     private double price;
     private long discount;
@@ -15,11 +17,22 @@ public class Product {
     @SerializedName("created_at")
     private String createdAt;
 
+
+
     @SerializedName("updated_at")
     private String updetedAt;
 
     @SerializedName("category_id")
     private long categoryID;
+
+    private List<ProductImage> images;
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
 
     public String getName() {
         return name;
