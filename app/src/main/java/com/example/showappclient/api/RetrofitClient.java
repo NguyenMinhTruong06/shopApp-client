@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "https://2a26-42-115-248-137.ngrok-free.app/";
+    private static final String BASE_URL = "https://dd0b-42-116-243-194.ngrok-free.app/";
     private static String accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMTEyMjIzMzMiLCJzdWIiOiIwMTExMjIyMzMzIiwiZXhwIjoxNzE2OTA3NjE4fQ.1B1fShH10wJlsP0rLZDoy7e9TcA6Vliw1W7LOlD69-E";
 
     public static void updateAccessToken(String token) {

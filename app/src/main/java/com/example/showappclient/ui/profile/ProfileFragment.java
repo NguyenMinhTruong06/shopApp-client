@@ -116,7 +116,7 @@ public class ProfileFragment extends Fragment {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Dismiss the dialog if "No" is clicked
+
                 dialog.dismiss();
             }
         });

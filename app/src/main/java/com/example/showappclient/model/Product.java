@@ -8,6 +8,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Product implements Serializable {
+    private String id;
     private String name;
     private double price;
     private long discount;
@@ -16,6 +17,7 @@ public class Product implements Serializable {
 
     @SerializedName("created_at")
     private String createdAt;
+    private byte[] image;
 
 
 
@@ -24,6 +26,41 @@ public class Product implements Serializable {
 
     @SerializedName("category_id")
     private long categoryID;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    private int quantity;
+    public Product(String id, String name,byte[]image) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.quantity = 1; // Default quantity is 1 when a product is created
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Product() {
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     private List<ProductImage> images;
     public List<ProductImage> getImages() {

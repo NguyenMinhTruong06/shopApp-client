@@ -31,7 +31,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     }
 
     public void setData(List<Product> productList) {
-
         this.productList = productList;
         notifyDataSetChanged();
     }
@@ -75,21 +74,24 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             productDescription = itemView.findViewById(R.id.text_description);
             productQuantity = itemView.findViewById(R.id.text_quantity);
             itemProduct = itemView.findViewById(R.id.item_product);
+
         }
 
         public void bind(Product product) {
-
+            productQuantity.setText(product.getId());
             productName.setText(product.getName());
-            productPrice.setText(String.valueOf(product.getPrice())+"₫");
+            productPrice.setText(product.getPrice() + "₫");
             productDescription.setText(product.getDescription());
             String imageUrl = "";
             if (product.getImages().size() > 0) {
                 imageUrl = product.getImages().get(0).getImageUrl();
             }
-            Glide.with(itemView.getRootView())
-                    .load(imageUrl)
-                    .centerCrop()
-                    .into(productImage);
+
+                Glide.with(itemView.getRootView())
+                        .load(imageUrl)
+                        .centerCrop()
+                        .into(productImage);
+
             itemProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
