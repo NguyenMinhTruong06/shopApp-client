@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -59,6 +60,12 @@ public class HomeFragment extends Fragment {
     private ImageView imgProfile;
     public List<Product> products = new ArrayList<>();
 
+    private int currentPage = 0;
+    private int lastPosition = 0;
+    private int totalPosition = 0;
+    private int currentPosition = 0;
+    private int pastPage = -1;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +87,7 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
 
         initVieModel();
+        mViewModel.getAllProduct(20, 0);
         productListAdapter = new ProductListAdapter();
         recyclerViewNewArrival = view.findViewById(R.id.recyclerview_newarrival);
         imgProfile = view.findViewById(R.id.image_profile);
@@ -87,7 +95,7 @@ public class HomeFragment extends Fragment {
 
         recyclerViewProduct.setAdapter(productListAdapter);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(getContext()));
-        mViewModel.getAllProduct(20, 0);
+
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +103,7 @@ public class HomeFragment extends Fragment {
                 ProfileFragment profileFragment = new ProfileFragment();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.root, profileFragment)
+                        .addToBackStack("HomeFragment")
                         .commit();
             }
         });
@@ -113,6 +122,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        handleLoadData();
     }
 
     private void initVieModel() {
@@ -120,11 +130,47 @@ public class HomeFragment extends Fragment {
         mViewModel.products.observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> productList) {
+
+                if (currentPage > 1) {
+                    products.addAll(productList);
+                } else {
+                    products.clear();
+                    products.addAll(productList);
+                }
                 productListAdapter.setData(productList);
-
-
             }
         });
 
+    }
+
+    private void handleLoadData() {
+        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("curentPage", currentPage + "");
+                int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                int totalPosition = productListAdapter.getItemCount();
+//                if (lastPosition > 20) {
+//                    floatButton.setVisibility(View.VISIBLE);
+//                } else {
+//                    floatButton.setVisibility(View.INVISIBLE);
+//                }
+                if (lastPosition != currentPosition && (lastPosition == totalPosition - 2)) {
+                    currentPage++;
+                    mViewModel.getAllProduct(
+                            20,
+                            currentPage
+                    );
+                    currentPosition = lastPosition;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.getAllProduct(20, 0);
     }
 }

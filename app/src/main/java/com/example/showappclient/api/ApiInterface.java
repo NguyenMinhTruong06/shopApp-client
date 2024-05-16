@@ -1,6 +1,7 @@
 package com.example.showappclient.api;
 
 import com.example.showappclient.model.User;
+import com.example.showappclient.model.request.ChangePasswordRequest;
 import com.example.showappclient.model.request.UserRequest;
 import com.example.showappclient.model.response.AuthResponse;
 import com.example.showappclient.model.response.ProductResponse;
@@ -27,4 +28,7 @@ public interface ApiInterface {
     Call<ProductResponse> getAllProduct(@Query("limit") int limit, @Query("page") int page);
     @GET("/api/v1/users/getuser")
     Call<User> getUser();
+
+    @POST("/api/v1/users/changepass")
+    Call<AuthResponse> updatePass(@Body ChangePasswordRequest changePasswordRequest);
 }

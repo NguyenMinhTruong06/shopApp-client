@@ -94,4 +94,11 @@ public class Cart implements Serializable {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+
+
+    public void setSelected(boolean b) {
+
+    }
+
 }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.showappclient.R;
 import com.example.showappclient.localdb.entity.Cart;
@@ -95,6 +96,7 @@ public class ProductFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addToCart(product);
+                Toast.makeText(getContext(), "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -24,12 +24,13 @@ import com.example.showappclient.model.User;
 import com.example.showappclient.ui.auth.login.LoginFragment;
 import com.example.showappclient.ui.home.HomeFragment;
 import com.example.showappclient.ui.product.ProductViewModel;
+import com.example.showappclient.ui.profile.changepass.ChangePasswordFragment;
 import com.example.showappclient.ui.profile.update.UpdateProfileFragment;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
-    private LinearLayout textLogout;
+    private LinearLayout textLogout,textChangePassword;
     private TextView tvUserName, tvPhoneNumber;
     private ImageView imgLeft, imageUpdate;
 
@@ -58,9 +59,20 @@ public class ProfileFragment extends Fragment {
         imageUpdate = view.findViewById(R.id.image_update);
         tvUserName=view.findViewById(R.id.text_name);
         tvPhoneNumber=view.findViewById(R.id.text_phone);
+        textChangePassword=view.findViewById(R.id.text_change_password);
 
         initViewModel();
         mViewModel.getUser();
+        textChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChangePasswordFragment changePasswordFragmentProfileFragment = new ChangePasswordFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, changePasswordFragmentProfileFragment)
+                        .addToBackStack("changePasswordFragmentProfileFragment")
+                        .commit();
+            }
+        });
         imageUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

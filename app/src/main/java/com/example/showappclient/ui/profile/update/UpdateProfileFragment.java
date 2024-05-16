@@ -30,6 +30,9 @@ import com.example.showappclient.ui.profile.ProfileFragment;
 import com.example.showappclient.ui.profile.ProfileViewModel;
 import com.example.showappclient.util.FormatDate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
 
@@ -73,6 +76,12 @@ public class UpdateProfileFragment extends Fragment {
         edtDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(edtDob.getText().toString().isEmpty()){
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Định dạng ngày
+                    String formattedDate = now.format(formatter);
+                    edtDob.setText(formattedDate);
+                }
                 if (!edtDob.getText().toString().isEmpty()) {
                     String[] date = edtDob.getText().toString().split("-");
                     int dayOfMonth = Integer.parseInt(date[2]);

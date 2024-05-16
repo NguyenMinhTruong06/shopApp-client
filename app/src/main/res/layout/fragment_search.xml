@@ -121,12 +121,12 @@
             android:textColor="@color/colorsearch"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/text_prodcut_selling"
+            app:layout_constraintEnd_toStartOf="@+id/text_category"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_prodcut_selling"
+            android:id="@+id/text_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -149,7 +149,7 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_prodcut_selling"
+            app:layout_constraintStart_toEndOf="@+id/text_category"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView

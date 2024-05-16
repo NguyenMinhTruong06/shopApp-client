@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "https://dd0b-42-116-243-194.ngrok-free.app/";
+    private static final String BASE_URL = "https://a266-42-115-249-94.ngrok-free.app/";
     private static String accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMTEyMjIzMzMiLCJzdWIiOiIwMTExMjIyMzMzIiwiZXhwIjoxNzE2OTA3NjE4fQ.1B1fShH10wJlsP0rLZDoy7e9TcA6Vliw1W7LOlD69-E";
 
     public static void updateAccessToken(String token) {
@@ -25,22 +25,7 @@ public class RetrofitClient {
 
     private static Retrofit retrofit;
 
-    //    public static Retrofit getInstance() {
-//        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-//                .connectTimeout(30, TimeUnit.SECONDS)
-//                .readTimeout(30, TimeUnit.SECONDS)
-//                .writeTimeout(30, TimeUnit.SECONDS);
-//        if (retrofit == null) {
-//            retrofit = new Retrofit.Builder()
-//                    .baseUrl(BASE_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .client(builder.build())
-//                    .build();
-//        }
-//
-//        return retrofit;
-//
-//    }
+
     private static OkHttpClient client;
 
     public static Retrofit getInstance() {
