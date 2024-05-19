@@ -76,11 +76,11 @@ public class LoginFragment extends Fragment {
                 String phoneNumber=editPhone.getText().toString();
                 String password=editPassword.getText().toString();
 
-//                mViewModel.login(new UserRequest(phoneNumber, password));
-                MainMenuFragment mainMenuFragment=new MainMenuFragment();
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.root, mainMenuFragment)
-                        .commit();
+                mViewModel.login(new UserRequest(phoneNumber, password));
+//                MainMenuFragment mainMenuFragment=new MainMenuFragment();
+//                requireActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.root, mainMenuFragment)
+//                        .commit();
 
             }
         });
@@ -119,7 +119,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(Map<String, String> data) {
                 if(data.get("successful")!=null){
-//                    RetrofitClient.updateAccessToken(data.get("successful"));
+                    RetrofitClient.updateAccessToken(data.get("successful"));
 
                     MainMenuFragment mainMenuFragment=new MainMenuFragment();
                     requireActivity().getSupportFragmentManager().beginTransaction()

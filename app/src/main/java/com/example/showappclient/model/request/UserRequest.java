@@ -10,9 +10,6 @@ public class UserRequest {
     @SerializedName("password")
     public String password;
 
-
-
-
     @SerializedName("fullname")
     public String name;
     @SerializedName("date_of_birth")

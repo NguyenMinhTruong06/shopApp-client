@@ -27,6 +27,8 @@ import com.example.showappclient.ui.product.ProductViewModel;
 import com.example.showappclient.ui.profile.changepass.ChangePasswordFragment;
 import com.example.showappclient.ui.profile.update.UpdateProfileFragment;
 
+import retrofit2.Call;
+
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
@@ -136,4 +138,9 @@ public class ProfileFragment extends Fragment {
         dialog.show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 }

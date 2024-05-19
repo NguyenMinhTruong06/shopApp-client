@@ -29,6 +29,6 @@ public interface ApiInterface {
     @GET("/api/v1/users/getuser")
     Call<User> getUser();
 
-    @POST("/api/v1/users/changepass")
+    @POST("/api/v1/users/changepassword")
     Call<AuthResponse> updatePass(@Body ChangePasswordRequest changePasswordRequest);
 }
