@@ -25,11 +25,31 @@ public class Cart implements Serializable {
     @ColumnInfo(name = "created_at")
     private String createdAt;
 
+    private String option;
+
+    private int productId;
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
+
     public Cart() {
 
     }
 
-    public Cart(int id, String productName, int quantity, double price, String imagePath, String description, String createdAt) {
+    public Cart(int id, String productName, int quantity, double price, String imagePath, String description, String createdAt, String option, int productId) {
         this.id = id;
         this.productName = productName;
         this.quantity = quantity;
@@ -37,6 +57,9 @@ public class Cart implements Serializable {
         this.imagePath = imagePath;
         this.description = description;
         this.createdAt = createdAt;
+        this.option = option;
+        this.productId = productId;
+
     }
 
     public int getId() {

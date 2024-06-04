@@ -95,7 +95,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
         private CheckBox checkBox;
-        private TextView tvName, tvPrice, tvAdd, tvRemove, tvValue, tvId;
+        private TextView tvName, tvPrice, tvAdd, tvRemove, tvValue, tvId, tvOption;
         private ImageView imgProduct;
         private Cart currentProduct;
         private AppDatabase appDatabase;
@@ -112,6 +112,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             tvValue = itemView.findViewById(R.id.text_quantity_value);
             imgProduct = itemView.findViewById(R.id.image_product);
             tvId = itemView.findViewById(R.id.text_description);
+            tvOption = itemView.findViewById(R.id.text_option);
 
 
             tvAdd.setOnClickListener(new View.OnClickListener() {
@@ -166,9 +167,10 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         public void bind(Cart cart) {
             currentProduct = cart;
             tvName.setText(cart.getProductName());
-            tvPrice.setText(String.valueOf(cart.getPrice())+"₫");
+            tvPrice.setText("Giá: "+(cart.getPrice())+"₫");
             tvValue.setText(String.valueOf(cart.getQuantity()));
-
+            tvOption.setText(cart.getOption());
+            int productId= cart.getProductId();
             Glide.with(itemView.getRootView())
                     .load(cart.getImagePath())
                     .centerCrop()

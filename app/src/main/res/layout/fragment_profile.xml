@@ -42,7 +42,8 @@
             android:id="@+id/image_avatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/account_profile"/>
     </androidx.cardview.widget.CardView>
 
 
@@ -151,30 +152,7 @@
                     android:layout_gravity="center_vertical"
                     app:srcCompat="@drawable/ic_right" />
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linear_feedback"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="1dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.97"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:text="Send Feedback"
-                    android:textColor="@color/black" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.02"
-                    android:layout_marginRight="8dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_right" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <TextView
@@ -225,31 +203,7 @@
                     android:layout_marginRight="8dp"
                     app:srcCompat="@drawable/ic_right" />
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/text_clear"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:textSize="17dp"
-                    android:layout_marginRight="8dp"
-                    android:gravity="center_vertical"
-                    android:text="Clear data &amp; cache"
-                    android:textColor="@color/black" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.02"
-                    android:layout_marginRight="8dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_right" />
-            </LinearLayout>
             <LinearLayout
                 android:id="@+id/text_logout"
                 android:layout_width="match_parent"

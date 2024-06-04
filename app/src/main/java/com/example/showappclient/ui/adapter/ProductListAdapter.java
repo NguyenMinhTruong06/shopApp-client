@@ -80,8 +80,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         public void bind(Product product) {
             productQuantity.setText(product.getId());
             productName.setText(product.getName());
-            productPrice.setText(product.getPrice() + "₫");
-            productDescription.setText(product.getDescription());
+
+
             String imageUrl = "";
             if (product.getImages().size() > 0) {
                 imageUrl = product.getImages().get(0).getImageUrl();
@@ -91,7 +91,16 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                         .load(imageUrl)
                         .centerCrop()
                         .into(productImage);
-
+            Float price =0f;
+            if(product.getOptions().size()>0){
+                price = product.getOptions().get(0).getPrice();
+            }
+            productPrice.setText("Giá: "+price+"₫");
+            String option="";
+            if(product.getOptions().size()>0){
+                option = product.getOptions().get(0).getOption();
+            }
+            productDescription.setText(option);
             itemProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -9,7 +9,16 @@ import java.util.List;
 
 public class ProductResponse {
     private List<Product> products;
+    private Product product;
     private int totalPages;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public List<Product> getProducts() {
         return products;

@@ -10,4 +10,14 @@ public class ProductRepositoryImpl implements ProductRepository{
     public Call<ProductResponse> getAllProduct(int limit, int page) {
         return RetrofitClient.getApiService().getAllProduct(limit, page);
     }
+
+    @Override
+    public Call<ProductResponse> getProductByKeywordAndCategoryId(int limit, int page, String keyword, int categoryId) {
+        return RetrofitClient.getApiService().getProductByKeywordAndCategoryId(limit,page,keyword,categoryId);
+    }
+
+    @Override
+    public Call<ProductResponse> getProduct(int productId) {
+        return RetrofitClient.getApiService().getProductById(productId);
+    }
 }

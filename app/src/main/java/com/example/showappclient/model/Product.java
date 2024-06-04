@@ -4,7 +4,6 @@ package com.example.showappclient.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Product implements Serializable {
@@ -18,6 +17,8 @@ public class Product implements Serializable {
     @SerializedName("created_at")
     private String createdAt;
     private byte[] image;
+
+
 
 
 
@@ -63,6 +64,16 @@ public class Product implements Serializable {
     }
 
     private List<ProductImage> images;
+    private List<ProductOption>options;
+
+    public List<ProductOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<ProductOption> options) {
+        this.options = options;
+    }
+
     public List<ProductImage> getImages() {
         return images;
     }

@@ -105,12 +105,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constraint_image_product" />
 
+
     <TextView
         android:id="@+id/text_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/quantity"
+        android:text="Sản phẩm đạt chất lượng"
         android:textColor="@color/secondaryDeep"
         android:textSize="12dp"
         app:layout_constraintEnd_toStartOf="@id/rating"
@@ -124,7 +125,7 @@
         android:layout_height="wrap_content"
         android:numStars="5"
         android:progressTint="@color/yellow"
-        android:rating="3"
+        android:rating="5"
         android:isIndicator="true"
         app:layout_constraintEnd_toEndOf="@id/text_rating_level"
         app:layout_constraintStart_toEndOf="@id/text_num"
@@ -149,7 +150,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="7dp"
-        app:layout_constraintBottom_toTopOf="@id/constraint_avatar_nxb"
+        app:layout_constraintBottom_toTopOf="@id/constraint_avatar_check"
         app:layout_constraintEnd_toEndOf="@id/text_name"
         app:layout_constraintStart_toStartOf="@id/text_name"
         app:layout_constraintTop_toBottomOf="@id/text_num">
@@ -181,6 +182,47 @@
                 app:layout_constraintStart_toStartOf="@id/text_info"
                 app:layout_constraintTop_toBottomOf="@id/text_info" />
 
+<!--            <TextView-->
+<!--                android:id="@+id/text_ncc"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/supplier"-->
+<!--                android:textColor="@color/secondaryDeep"-->
+<!--                android:textSize="14dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/text_info"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_ma" />-->
+
+            <TextView
+                android:id="@+id/text_author"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="@color/secondaryDeep"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/text_info"
+                app:layout_constraintTop_toBottomOf="@id/text_ma" />
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_name_author"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/colorAuth"-->
+<!--                android:textSize="14dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/text_ncc"-->
+<!--                app:layout_constraintStart_toEndOf="@id/text_author"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_author" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_options"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_author" />
             <TextView
                 android:id="@+id/text_ncc"
                 android:layout_width="0dp"
@@ -188,147 +230,58 @@
                 android:text="@string/supplier"
                 android:textColor="@color/secondaryDeep"
                 android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="@id/text_info"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_ma" />
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_options" />
 
-            <TextView
-                android:id="@+id/text_author"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/secondaryDeep"
-                android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_ncc" />
+<!--            <TextView-->
+<!--                android:id="@+id/text_year"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/year"-->
+<!--                android:textColor="@color/secondaryDeep"-->
+<!--                android:textSize="14dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/text_ncc"-->
+<!--                app:layout_constraintStart_toStartOf="@id/recyclerView_options"/>-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_author" />-->
 
-            <TextView
-                android:id="@+id/text_name_author"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAuth"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="@id/text_ncc"
-                app:layout_constraintStart_toEndOf="@id/text_author"
-                app:layout_constraintTop_toBottomOf="@id/text_ncc" />
+<!--            <TextView-->
+<!--                android:id="@+id/text_language"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/language"-->
+<!--                android:textColor="@color/secondaryDeep"-->
+<!--                android:textSize="14dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/text_info"-->
+<!--                app:layout_constraintStart_toStartOf="@id/text_info"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_year" />-->
 
-            <TextView
-                android:id="@+id/text_year"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/year"
-                android:textColor="@color/secondaryDeep"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="@id/text_name_author"
-                app:layout_constraintStart_toStartOf="@id/text_ncc"
-                app:layout_constraintTop_toBottomOf="@id/text_author" />
+<!--            <TextView-->
+<!--                android:id="@+id/text_description"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:ellipsize="end"-->
+<!--                android:maxLines="3"-->
+<!--                android:textColor="@color/secondaryDeep"-->
+<!--                android:textSize="14dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/text_info"-->
+<!--                app:layout_constraintStart_toStartOf="@id/text_info"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_language" />-->
 
-            <TextView
-                android:id="@+id/text_language"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/language"
-                android:textColor="@color/secondaryDeep"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="@id/text_info"
-                app:layout_constraintStart_toStartOf="@id/text_info"
-                app:layout_constraintTop_toBottomOf="@id/text_year" />
-
-            <TextView
-                android:id="@+id/text_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:textColor="@color/secondaryDeep"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="@id/text_info"
-                app:layout_constraintStart_toStartOf="@id/text_info"
-                app:layout_constraintTop_toBottomOf="@id/text_language" />
-
-            <TextView
-                android:id="@+id/readmore"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/readmore"
-                android:textColor="@color/primary"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/text_info"
-                app:layout_constraintStart_toStartOf="@id/text_info"
-                app:layout_constraintTop_toBottomOf="@id/text_description" />
+<!--            <TextView-->
+<!--                android:id="@+id/readmore"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/readmore"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textSize="14dp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/text_info"-->
+<!--                app:layout_constraintStart_toStartOf="@id/recyclerView_options"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_description" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_avatar_nxb"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="9dp"
-        android:layout_marginRight="8.5dp"
-        android:layout_marginBottom="13dp"
-        android:background="@drawable/bg_publish"
-        app:layout_constraintBottom_toTopOf="@id/constraint_avatar_check"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/text_publish"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_24"
-            android:layout_marginTop="18dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/colorPublish"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/text_pickup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_pickup"
-            app:layout_constraintStart_toEndOf="@id/text_publish"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_buymore"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Mua thêm các sản phẩm khác"
-            android:textColor="@color/colorPublish"
-            android:textSize="12dp"
-            app:layout_constraintStart_toStartOf="@id/text_publish"
-            app:layout_constraintTop_toBottomOf="@id/text_publish" />
-
-        <TextView
-            android:id="@+id/text_promotion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Ưu đãi lên tới 10%"
-            android:textColor="@color/status"
-            android:textSize="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/text_buymore"
-            app:layout_constraintTop_toBottomOf="@id/text_buymore" />
-
-        <ImageView
-            android:id="@+id/image_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="23dp"
-            android:layout_marginBottom="20dp"
-            android:padding="3dp"
-            android:src="@drawable/ic_arrow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_publish" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_avatar_check"
@@ -357,7 +310,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"
-            android:text="0 VND"
+            android:text="0 ₫"
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

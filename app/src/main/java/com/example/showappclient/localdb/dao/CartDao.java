@@ -26,6 +26,7 @@ public interface CartDao {
     @Query("SELECT * FROM cart")
     List<Cart> findAll();
 
-    @Query("SELECT * FROM cart where product_name= :productName")
-    Cart findByName(String productName);
+
+    @Query("SELECT * FROM cart WHERE product_Name = :productName AND option = :option LIMIT 1")
+    Cart findByNameAndOption(String productName, String option);
 }

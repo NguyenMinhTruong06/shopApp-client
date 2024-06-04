@@ -53,9 +53,9 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
-    private RecyclerView recyclerViewNewArrival;
+
     private ProductListAdapter productListAdapter;
-    //private RecyclerView recyclerViewCategory;
+
     private RecyclerView recyclerViewProduct;
     private ImageView imgProfile;
     public List<Product> products = new ArrayList<>();
@@ -85,14 +85,14 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        Log.d("HomeFragment", "onViewCreated called");
 
         initVieModel();
-        mViewModel.getAllProduct(20, 0);
+
         productListAdapter = new ProductListAdapter();
-        recyclerViewNewArrival = view.findViewById(R.id.recyclerview_newarrival);
+
         imgProfile = view.findViewById(R.id.image_profile);
         recyclerViewProduct = view.findViewById(R.id.recyclerview_product);
-
         recyclerViewProduct.setAdapter(productListAdapter);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        handleLoadData();
+       handleLoadData();
     }
 
     private void initVieModel() {
@@ -131,13 +131,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Product> productList) {
 
-                if (currentPage > 1) {
-                    products.addAll(productList);
+                if (productList != null) {
+                    Log.d("HomeFragment", "Products loaded: " + productList.size());
+                    if (currentPage > 0) {
+                        products.addAll(productList);
+                    } else {
+                        products.clear();
+                        products.addAll(productList);
+                    }
+                    productListAdapter.setData(products);
+                    productListAdapter.notifyDataSetChanged();
                 } else {
-                    products.clear();
-                    products.addAll(productList);
+                    Log.d("HomeFragment", "Product list is null");
                 }
-                productListAdapter.setData(productList);
+
             }
         });
 
@@ -149,28 +156,25 @@ public class HomeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.d("curentPage", currentPage + "");
-                int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                int totalPosition = productListAdapter.getItemCount();
-//                if (lastPosition > 20) {
-//                    floatButton.setVisibility(View.VISIBLE);
-//                } else {
-//                    floatButton.setVisibility(View.INVISIBLE);
-//                }
-                if (lastPosition != currentPosition && (lastPosition == totalPosition - 2)) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                int totalItemCount = productListAdapter.getItemCount();
+
+                if (lastVisibleItemPosition == totalItemCount - 1) {
                     currentPage++;
-                    mViewModel.getAllProduct(
-                            20,
-                            currentPage
-                    );
-                    currentPosition = lastPosition;
+                    mViewModel.getAllProduct(10, currentPage);
                 }
+                currentPosition = lastPosition;
+
             }
         });
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.getAllProduct(20, 0);
+        Log.d("HomeFragment", "onResume called");
+        mViewModel.getAllProduct(10, 0);
     }
 }

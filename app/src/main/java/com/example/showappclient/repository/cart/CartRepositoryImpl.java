@@ -16,11 +16,13 @@ public class CartRepositoryImpl implements CartRepository {
 
     public CartRepositoryImpl(Application application) {
         appDatabase = AppDatabase.getInstance(application);
+
     }
 
     @Override
     public void insert(Cart cart) {
-        Cart cartExist = appDatabase.cartDao().findByName(cart.getProductName());
+
+        Cart cartExist = appDatabase.cartDao().findByNameAndOption(cart.getProductName(), cart.getOption());
         if (cartExist == null) {
             appDatabase.cartDao().insert(cart);
         } else {
@@ -33,6 +35,11 @@ public class CartRepositoryImpl implements CartRepository {
     public List<Cart> findAll() {
         return appDatabase.cartDao().findAll();
     }
+    @Override
+    public void delete(Cart cart) {
+
+           appDatabase.cartDao().delete(cart);
 
 
+    }
 }

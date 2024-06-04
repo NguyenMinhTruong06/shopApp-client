@@ -1,81 +1,79 @@
-package com.example.showappclient.model;
+package com.example.showappclient.model.response;
 
-import java.time.LocalDate;
-import java.util.Date;
+import com.example.showappclient.model.Order;
 import com.google.gson.annotations.SerializedName;
 
-public class Order {
+import java.util.List;
 
-    @SerializedName("id")
-    private Long id;
+public class OrderResponse {
 
-
+    private int id;
     @SerializedName("user_id")
-    private User user;
+    private int userId;
 
-    @SerializedName( "fullname")
-    private String fullName;
+    public int getUserId() {
+        return userId;
+    }
 
-    @SerializedName("phone_number")
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    //    private User user;
+    @SerializedName("fullName")
+    private String customerFullName;
     private String phoneNumber;
-
-    @SerializedName( "address")
     private String address;
-
-    @SerializedName("email")
     private String email;
-
-    @SerializedName( "note")
     private String note;
-
-    @SerializedName( "order_date")
-    private Date orderDate;
-
-    @SerializedName( "status")
+    @SerializedName("orderDate")
+    private String orderDate;
     private String status;
-
-    @SerializedName( "total_money")
-    private Float totalMoney;
-
-    @SerializedName( "shipping_method")
+    @SerializedName("totalMoney")
+    private double totalMoney;
+    @SerializedName("shippingMethod")
     private String shippingMethod;
-
-    @SerializedName( "shipping_address")
+    @SerializedName("shippingAddress")
     private String shippingAddress;
-
-    @SerializedName( "shipping_date")
-    private LocalDate shippingDate;
-
-    @SerializedName( "tracking_number")
+    @SerializedName("shippingDate")
+    private String shippingDate;
+    @SerializedName("trackingNumber")
     private String trackingNumber;
-
-    @SerializedName( "payment_method")
+    @SerializedName("paymentMethod")
     private String paymentMethod;
-    @SerializedName( "active")
-    private Boolean active;
+    private boolean active;
+    private List<Order> orderDetails;
 
-    public Long getId() {
+    public List<Order> getOrders() {
+        return orderDetails;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orderDetails = orders;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
+
+    public String getCustomerFullName() {
+        return customerFullName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setCustomerFullName(String customerFullName) {
+        this.customerFullName = customerFullName;
     }
 
     public String getPhoneNumber() {
@@ -110,11 +108,11 @@ public class Order {
         this.note = note;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -126,11 +124,11 @@ public class Order {
         this.status = status;
     }
 
-    public Float getTotalMoney() {
+    public double getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(Float totalMoney) {
+    public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
     }
 
@@ -150,11 +148,11 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public LocalDate getShippingDate() {
+    public String getShippingDate() {
         return shippingDate;
     }
 
-    public void setShippingDate(LocalDate shippingDate) {
+    public void setShippingDate(String shippingDate) {
         this.shippingDate = shippingDate;
     }
 
@@ -174,11 +172,11 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }

@@ -4,10 +4,13 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.showappclient.localdb.AppDatabase;
+import com.example.showappclient.localdb.dao.CartDao;
 import com.example.showappclient.localdb.entity.Cart;
 import com.example.showappclient.model.Product;
 import com.example.showappclient.model.response.ProductResponse;
@@ -16,13 +19,13 @@ import com.example.showappclient.repository.cart.CartRepositoryImpl;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class CartViewModel extends AndroidViewModel {
     CartRepository cartRepository;
+    private CartDao cartDao;
     public MutableLiveData<List<Cart>> products = new MutableLiveData<>();
+
     public CartViewModel(@NonNull Application application) {
         super(application);
         cartRepository = new CartRepositoryImpl(application);
@@ -36,5 +39,9 @@ public class CartViewModel extends AndroidViewModel {
 
     public void getAllProductInCart() {
         products.postValue(cartRepository.findAll());
+    }
+    public void deleteFromCart(Cart cart) {
+        cartRepository.delete(cart);
+
     }
 }

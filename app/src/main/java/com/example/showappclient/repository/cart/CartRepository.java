@@ -10,5 +10,5 @@ public interface CartRepository {
     void insert(Cart cart);
     List<Cart> findAll();
 
-
+    void delete(Cart cart);
 }

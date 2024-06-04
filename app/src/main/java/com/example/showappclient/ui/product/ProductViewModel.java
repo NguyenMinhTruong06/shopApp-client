@@ -32,6 +32,9 @@ public class ProductViewModel extends ViewModel {
     ProductRepository productRepository = new ProductRepositoryImpl();
 
 
+
+
+
     public LiveData<List<Product>> getProducts() {
         return products;
     }
@@ -40,6 +43,7 @@ public class ProductViewModel extends ViewModel {
     public void setProducts(List<Product> productList) {
         products.setValue(productList);
     }
+
 
     public void getAllProduct(int limit, int page) {
         productRepository.getAllProduct(limit, page).enqueue(new Callback<ProductResponse>() {
@@ -52,7 +56,7 @@ public class ProductViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-
+                Log.e("ProductViewModel", "Failed to fetch products", t);
             }
         });
     }

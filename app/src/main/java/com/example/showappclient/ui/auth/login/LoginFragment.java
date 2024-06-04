@@ -133,7 +133,7 @@ public class LoginFragment extends Fragment {
                             .commit();
                     Toast.makeText(getContext(), data.get("failure"), Toast.LENGTH_SHORT).show();
                 }
-//                        mViewModel.message.removeObservers(getViewLifecycleOwner());
+
             }
         });
 

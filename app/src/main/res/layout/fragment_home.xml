@@ -55,7 +55,8 @@
                     android:id="@+id/viewpager_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@color/background"
+                    android:background="@drawable/img"
+
                     app:layout_constraintDimensionRatio="w, 1:2" />
 
 
@@ -63,27 +64,27 @@
 
 
 
-            <TextView
-                android:id="@+id/text_newarrival"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginTop="15dp"
-                android:text="Sản phẩm mới"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardview" />
+<!--            <TextView-->
+<!--                android:id="@+id/text_newarrival"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20dp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardview" />-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_newarrival"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_newarrival"
-                />
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recyclerview_newarrival"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_newarrival"-->
+<!--                />-->
 
 
 
@@ -97,7 +98,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerview_newarrival" />
+                app:layout_constraintTop_toBottomOf="@+id/cardview" />
 
 <!--            <LinearLayout-->
 <!--                android:id="@+id/text_category"-->

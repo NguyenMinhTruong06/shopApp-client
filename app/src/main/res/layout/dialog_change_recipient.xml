@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_recipient_info"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Họ và Tên"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="8dp"
+        android:padding="20dp"/>
+
+    <EditText
+        android:id="@+id/edit_recipient_phone"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Số điện thoại"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="8dp"
+        android:padding="20dp"/>
+
+    <EditText
+        android:id="@+id/edit_recipient_address"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Địa chỉ"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="16dp"
+        android:padding="20dp"/>
+
+    <TextView
+        android:id="@+id/text_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Save"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/bg_btn_signin"/>
+
+</LinearLayout>

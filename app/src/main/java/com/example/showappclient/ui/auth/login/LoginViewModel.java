@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+
     MutableLiveData<Map<String, String>> message = new MutableLiveData<>();
 
 
@@ -37,7 +37,7 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if (response.isSuccessful()) {
-                    // Gọi callback onResponse và log token
+
                     String token = response.body().token;
                     Map<String, String> data = new HashMap<>();
                     data.put("successful", token);

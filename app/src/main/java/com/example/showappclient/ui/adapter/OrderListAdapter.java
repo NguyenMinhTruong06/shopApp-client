@@ -42,27 +42,29 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         if (selectedProducts != null) {
             return selectedProducts.size();
         } else {
-            return 0; // Trả về 0 nếu danh sách là null
+            return 0;
         }
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvName, tvPrice, tvQuantity;
+        private TextView tvName, tvPrice, tvQuantity,tvOption;
         private ImageView imgProduct;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.text_name_product);
            tvPrice = itemView.findViewById(R.id.text_price_product);
-            tvQuantity = itemView.findViewById(R.id.text_description);
+            tvQuantity = itemView.findViewById(R.id.text_quantity);
             imgProduct = itemView.findViewById(R.id.image_product);
+            tvOption = itemView.findViewById(R.id.text_option);
 
         }
 
         public void bind(Cart cart) {
             tvName.setText(cart.getProductName());
-            tvPrice.setText(String.valueOf(cart.getPrice()));
+            tvPrice.setText("Giá: "+(cart.getPrice())+"₫");
             tvQuantity.setText("Số lượng: "+String.valueOf(cart.getQuantity()));
+            tvOption.setText(cart.getOption());
             Glide.with(itemView.getRootView())
                     .load(cart.getImagePath())
                     .centerCrop()

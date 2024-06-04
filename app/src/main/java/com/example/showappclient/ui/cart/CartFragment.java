@@ -40,7 +40,7 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
     private Product product = new Product();
     private List<Product> cartProductList = new ArrayList<>();
     private TextView tvSum,tvCheckOut;
-    CartViewModel cartViewModel;
+    private CartViewModel cartViewModel;
     private ImageView imgProfile;
     private AppDatabase appDatabase;
     private float totalSum = 0f;
@@ -174,6 +174,7 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
                 cartListAdapter.setData(carts);
             }
         });
+        onResume();
     }
 
     @Override
@@ -188,4 +189,5 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
             selectedProducts.remove(cart);
         }
     }
+
 }
