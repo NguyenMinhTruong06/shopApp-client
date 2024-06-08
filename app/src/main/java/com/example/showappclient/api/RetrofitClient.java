@@ -16,9 +16,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "https://2736-1-53-89-196.ngrok-free.app/";
+    private static final String BASE_URL = "https://5c0d-1-52-232-149.ngrok-free.app/";
     private static String accessToken = "";
-    //eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMTEyMjIzMzMiLCJzdWIiOiIwMTExMjIyMzMzIiwiZXhwIjoxNzE2OTA3NjE4fQ.1B1fShH10wJlsP0rLZDoy7e9TcA6Vliw1W7LOlD69-E
+
 
     public static void updateAccessToken(String token) {
         accessToken = token;
@@ -40,9 +40,9 @@ public class RetrofitClient {
                                 .build();
                         return chain.proceed(request);
                     })
-                    .connectTimeout(5, TimeUnit.MINUTES)
-                    .readTimeout(5, TimeUnit.MINUTES)
-                    .writeTimeout(5, TimeUnit.MINUTES);
+                    .connectTimeout(15, TimeUnit.MINUTES)
+                    .readTimeout(15, TimeUnit.MINUTES)
+                    .writeTimeout(15, TimeUnit.MINUTES);
 
             client = httpClient.build();
         }

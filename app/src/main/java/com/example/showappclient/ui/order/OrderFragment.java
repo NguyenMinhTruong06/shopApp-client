@@ -48,11 +48,13 @@ public class OrderFragment extends Fragment {
     private OrderViewModel orderViewModel;
 
     int userId = 0;
-    private int orderId = -1;
+    int orderCount = 0;
 
-    private String shippingMethod = "Hỏa tốc"; // Giá trị mặc định
+
+    private String shippingMethod = "Hoả tốc"; // Giá trị mặc định
     private String paymentMethod = "MoMo";
     float tShip = 100000;
+    int id=0;
 
     public static OrderFragment newInstance() {
         return new OrderFragment();
@@ -162,9 +164,9 @@ public class OrderFragment extends Fragment {
 
 
         tvPayment.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-
                 String name = tvName.getText().toString();
                 String phone = tvPhone.getText().toString();
                 String address = tvAddress.getText().toString();
@@ -174,56 +176,29 @@ public class OrderFragment extends Fragment {
 
                 orderViewModel.createOrder(new OrderRequest(name, userId, phone, address, shippingMethod, totalMoney, paymentMethod));
 
-                orderViewModel.orderResponse.observe(getViewLifecycleOwner(), new Observer<OrderResponse>() {
+                // Observer mới để xử lý khi có orderId mới
+                Observer<Integer> orderIdObserver = new Observer<Integer>() {
                     @Override
-                    public void onChanged(OrderResponse orderResponse) {
-                        if (orderResponse != null) {
-                            orderId = orderResponse.getId();
-                            if (selectedProducts != null && !selectedProducts.isEmpty()) {
-                                for (Cart cartItem : selectedProducts) {
-                                    int productId = cartItem.getProductId();
-                                    double price = cartItem.getPrice();
-                                    int quantity = cartItem.getQuantity();
-                                    String option = cartItem.getOption();
-                                    double totalMoneyProduct = price * quantity;
-
-                                    orderViewModel.createOrderDetail(new OrderDetailRequest(orderId, productId,(float) price, quantity, (float) totalMoneyProduct, option ));
-                                    orderViewModel.apiCallSuccess.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-                                                public void onChanged(Boolean success) {
-                                                    if (success != null && success) {
-                                                        mViewModel.deleteFromCart(cartItem);
-                                                        MainMenuFragment cartFragment = new MainMenuFragment();
-                                                        requireActivity().getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.root, cartFragment)
-                                                                .commit();
-                                                        Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        CartFragment cartFragment = new CartFragment();
-                                                        requireActivity().getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.root, cartFragment)
-                                                                .commit();
-                                                        Toast.makeText(getContext(), "Lỗi khi thanh toán", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                    });
-
-                                }
-
-
-                            }
-
+                    public void onChanged(Integer orderId) {
+                        if (orderId != null) {
+                            id = orderId;
+                            createOrderDetail(orderId);
+                            // Sau khi sử dụng, loại bỏ Observer và đặt lại giá trị orderId
+                            orderViewModel.orderIdLiveData.removeObserver(this);
+                            orderViewModel.orderIdLiveData.setValue(null);
                         }
                     }
-                });
+                };
 
-
+                // Đảm bảo rằng không có Observer cũ còn tồn tại
+                orderViewModel.orderIdLiveData.removeObservers(getViewLifecycleOwner());
+                // Bắt đầu quan sát orderIdLiveData
+                orderViewModel.orderIdLiveData.observe(getViewLifecycleOwner(), orderIdObserver);
             }
         });
 
 
         Bundle receivedBundle = getArguments();
-
-
         if (receivedBundle != null) {
             selectedProducts = (List<Cart>) receivedBundle.getSerializable("selected_products");
             float totalPrice = receivedBundle.getFloat("total_price");
@@ -246,6 +221,45 @@ public class OrderFragment extends Fragment {
             }
         });
 
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Loại bỏ Observer khi Fragment được hủy
+        orderViewModel.orderIdLiveData.removeObservers(getViewLifecycleOwner());
+    }
+    public void createOrderDetail(int orderId){
+        if (selectedProducts != null && !selectedProducts.isEmpty()) {
+            for (Cart cartItem : selectedProducts) {
+                int productId = cartItem.getProductId();
+                double price = cartItem.getPrice();
+                int quantity = cartItem.getQuantity();
+                String option = cartItem.getOption();
+                double totalMoneyProduct = price * quantity;
+                String productName = cartItem.getProductName();
+
+                orderViewModel.createOrderDetail(new OrderDetailRequest(orderId, productId,(float) price, quantity, (float) totalMoneyProduct, option,productName ));
+                orderViewModel.apiCallSuccess.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                    public void onChanged(Boolean success) {
+                        if (success != null && success ) {
+                            mViewModel.deleteFromCart(cartItem);
+                            MainMenuFragment cartFragment = new MainMenuFragment();
+                            requireActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.root, cartFragment)
+                                    .commit();
+                            Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            CartFragment cartFragment = new CartFragment();
+                            requireActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.root, cartFragment)
+                                    .commit();
+                            Toast.makeText(getContext(), "Lỗi khi thanh toán", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }
     }
 
     public void initViewModel() {
@@ -282,7 +296,6 @@ public class OrderFragment extends Fragment {
 
     }
 
-
     private void showChangeRecipientDialog() {
 
         ChangeRecipientDialogFragment dialog = new ChangeRecipientDialogFragment();
@@ -296,5 +309,4 @@ public class OrderFragment extends Fragment {
             tvTotalPayment.setText(totalPricePayment + "₫");
         }
     }
-
 }

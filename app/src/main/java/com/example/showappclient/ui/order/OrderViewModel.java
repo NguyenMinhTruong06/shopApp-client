@@ -44,6 +44,7 @@ public class OrderViewModel extends ViewModel {
     private final MutableLiveData<String> recipientPhone = new MutableLiveData<>();
     private final MutableLiveData<String> recipientAddress = new MutableLiveData<>();
     public MutableLiveData<OrderResponse> orderResponse = new MutableLiveData<>();
+    public MutableLiveData<Integer> orderIdLiveData = new MutableLiveData<>();
     public MutableLiveData<OrderDetailResponse> orderDetailReponseMutableLiveData = new MutableLiveData<>();
     MutableLiveData<Map<String, String>> message = new MutableLiveData<>();
 
@@ -88,6 +89,7 @@ public class OrderViewModel extends ViewModel {
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
                 if (response.isSuccessful()) {
                     orderResponse.postValue(response.body());
+                    orderIdLiveData.setValue(response.body().getId());
 
                 }
             }

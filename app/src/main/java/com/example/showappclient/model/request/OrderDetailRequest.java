@@ -16,14 +16,26 @@ public class OrderDetailRequest {
     private String option;
     private Float price;
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    @SerializedName("product_name")
+    private String productName;
+
     // Constructor
-    public OrderDetailRequest(int orderId, int productId, Float price, int numberOfProducts,Float totalMoneyProduct, String option ) {
+    public OrderDetailRequest(int orderId, int productId, Float price, int numberOfProducts,Float totalMoneyProduct, String option ,String productName) {
         this.orderId = orderId;
         this.productId = productId;
         this.numberOfProducts = numberOfProducts;
         this.totalMoneyProduct = totalMoneyProduct;
         this.option = option;
         this.price = price;
+        this.productName = productName;
     }
 
     // Getters and Setters

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +35,10 @@ public class SearchFragment extends Fragment {
     private SearchViewModel mViewModel;
     private EditText editSearch;
     private ImageView imgSearch;
-    private TextView tvCategory;
+    private TextView tvCategory,tvSortPrice;
     private ProductListAdapter productListAdapter;
     private RecyclerView recyclerViewProduct;
+    private LinearLayout linearLayoutPrice,linearLayoutPriceT;
     private List<Category> categoryList;
     private int selectedCategoryId =-1;
 
@@ -66,6 +68,8 @@ public class SearchFragment extends Fragment {
         editSearch= view.findViewById(R.id.edit_search);
         imgSearch= view.findViewById(R.id.image_seach);
         tvCategory =view.findViewById(R.id.text_category);
+        linearLayoutPriceT= view.findViewById(R.id.linear_product_new);
+        linearLayoutPrice = view.findViewById(R.id.linear_product_price);
         recyclerViewProduct = view.findViewById(R.id.recycler_product);
         productListAdapter = new ProductListAdapter();
         recyclerViewProduct.setAdapter(productListAdapter);
@@ -118,6 +122,18 @@ public class SearchFragment extends Fragment {
                 } else {
                     //Toast.makeText(getContext(), "No categories available", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        linearLayoutPriceT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productListAdapter.sortByPriceAscending();
+            }
+        });
+        linearLayoutPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                productListAdapter.sortByPriceDescending();
             }
         });
     }

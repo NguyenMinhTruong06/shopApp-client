@@ -106,28 +106,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/linear_receiver_address"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/myAddress"
-                    android:textColor="@color/black" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.02"
-                    android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/ic_right" />
-            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linear_receiver_address"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="56dp"-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.9"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:text="@string/myAddress"-->
+<!--                    android:textColor="@color/black" />-->
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_weight="0.02"-->
+<!--                    android:layout_marginRight="8dp"-->
+<!--                    app:srcCompat="@drawable/ic_right" />-->
+<!--            </LinearLayout>-->
             <LinearLayout
                 android:id="@+id/linear_my_order"
                 android:layout_width="match_parent"

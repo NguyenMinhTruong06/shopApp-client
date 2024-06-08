@@ -19,6 +19,8 @@ import com.example.showappclient.model.response.ProductResponse;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
@@ -32,6 +34,24 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public void setData(List<Product> productList) {
         this.productList = productList;
+        notifyDataSetChanged();
+    }
+    public void sortByPriceDescending() {
+        Collections.sort(productList, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return Float.compare(p2.getOptions().get(0).getPrice(), p1.getOptions().get(0).getPrice());
+            }
+        });
+        notifyDataSetChanged();
+    }
+    public void sortByPriceAscending() {
+        Collections.sort(productList, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return Float.compare(p1.getOptions().get(0).getPrice(), p2.getOptions().get(0).getPrice());
+            }
+        });
         notifyDataSetChanged();
     }
 
