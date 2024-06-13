@@ -2,6 +2,7 @@ package com.example.showappclient.ui.home;
 
 import static androidx.recyclerview.widget.LinearLayoutManager.*;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -65,6 +66,8 @@ public class HomeFragment extends Fragment {
     private int totalPosition = 0;
     private int currentPosition = 0;
     private int pastPage = -1;
+    private boolean isLoading = true;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,8 +96,13 @@ public class HomeFragment extends Fragment {
 
         imgProfile = view.findViewById(R.id.image_profile);
         recyclerViewProduct = view.findViewById(R.id.recyclerview_product);
-        recyclerViewProduct.setAdapter(productListAdapter);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewProduct.setAdapter(productListAdapter);
+        mViewModel.getAllProduct(5, currentPage);
+
+
+
+
 
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
@@ -121,60 +129,111 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+//      handleLoadData();
+//        setupScrollListener();
+        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("TestFragment", "dy: " + dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
-       handleLoadData();
+                if (!isLoading) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0) {
+                        currentPage++;
+                        isLoading = true;
+                        mViewModel.getAllProduct(5, currentPage);
+                    }
+                }
+            }
+        });
+
+    }
+    private void setupScrollListener() {
+        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if (!isLoading) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0) {
+                        currentPage++;
+                        isLoading = true;
+                        mViewModel.getAllProduct(5, currentPage);
+                    }
+                }
+            }
+        });
     }
 
-    private void initVieModel() {
 
+
+    private void initVieModel() {
         mViewModel.products.observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> productList) {
 
                 if (productList != null) {
                     Log.d("HomeFragment", "Products loaded: " + productList.size());
-                    if (currentPage > 0) {
-                        products.addAll(productList);
-                    } else {
+                    if (currentPage == 0 ) {
                         products.clear();
-                        products.addAll(productList);
                     }
+                    products.addAll(productList);
                     productListAdapter.setData(products);
                     productListAdapter.notifyDataSetChanged();
                 } else {
                     Log.d("HomeFragment", "Product list is null");
                 }
-
-            }
-        });
-
-    }
-
-    private void handleLoadData() {
-        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                Log.d("curentPage", currentPage + "");
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-                int totalItemCount = productListAdapter.getItemCount();
-
-                if (lastVisibleItemPosition == totalItemCount - 1) {
-                    currentPage++;
-                    mViewModel.getAllProduct(10, currentPage);
-                }
-                currentPosition = lastPosition;
-
+                    isLoading = false;
             }
         });
     }
+
+
+//    private void handleLoadData() {
+//        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                Log.d("curentPage", currentPage + "");
+//
+//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+//                int totalItemCount = layoutManager.getItemCount();
+//                int visibleItemCount = layoutManager.getChildCount();
+//                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+//
+//                if (isLoading==false && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+//
+//                    currentPage++;
+//                    Log.d("HomeFragment", "Loading page " + currentPage);
+//                    mViewModel.getAllProduct(5, currentPage);
+//                    isLoading = true;
+//                }
+//
+//
+//            }
+//        });
+//    }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("HomeFragment", "onResume called");
-        mViewModel.getAllProduct(10, 0);
+//        currentPage = 0;
+//        isLoading = true;
+//        Log.d("HomeFragment", "onResume called");
+//        mViewModel.getAllProduct(5, currentPage);
+
     }
 }

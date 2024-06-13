@@ -6,11 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.showappclient.R;
-import com.example.showappclient.model.Order;
 import com.example.showappclient.model.response.OrderResponse;
 
 
@@ -19,18 +17,29 @@ import java.util.List;
 
 public class OrderListHistoryAdapter extends RecyclerView.Adapter<OrderListHistoryAdapter.ViewHolder> {
     private List<OrderResponse> orders = new ArrayList<>();
+    private static OnItemClickListener onItemClickListener;
+
 
     public void setOrders(List<OrderResponse> orders) {
         this.orders = orders;
-        notifyDataSetChanged(); // Thông báo cho Adapter rằng dữ liệu đã thay đổi
+        notifyDataSetChanged();
     }
+//    public interface OnItemClickListener {
+//        void onItemClick(int position);
+//    }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+    public OrderResponse getOrder(int position) {
+        return orders.get(position);
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_history, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onItemClickListener);
     }
 
     @Override
@@ -51,14 +60,26 @@ public class OrderListHistoryAdapter extends RecyclerView.Adapter<OrderListHisto
         private TextView tvOrderId, tvPrice, tvStatus, tvPaymentMethod;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
             tvOrderId = itemView.findViewById(R.id.text_id_order);
             tvPrice = itemView.findViewById(R.id.text_price);
             tvStatus = itemView.findViewById(R.id.text_status);
             tvPaymentMethod = itemView.findViewById(R.id.text_number_pro);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
 
         }
+
 
         public void bind(OrderResponse order) {
             tvOrderId.setText("Mã đơn hàng: "+String.valueOf(order.getId()));

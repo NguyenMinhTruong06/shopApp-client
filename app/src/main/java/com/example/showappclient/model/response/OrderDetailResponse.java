@@ -16,6 +16,8 @@ public class OrderDetailResponse {
     @SerializedName("option")
     private String option;
 
+    @SerializedName("productName")
+    private String productName;
     // Constructor
     public OrderDetailResponse(int id, int orderId, int productId, double price, int numberOfProducts, double totalMoney, String option) {
         this.id = id;
@@ -25,6 +27,14 @@ public class OrderDetailResponse {
         this.numberOfProducts = numberOfProducts;
         this.totalMoney = totalMoney;
         this.option = option;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     // Getters and Setters

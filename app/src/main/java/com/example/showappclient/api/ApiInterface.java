@@ -55,4 +55,7 @@ public interface ApiInterface {
     @GET("/api/v1/orders/user/{user_id}")
 
     Call<List<OrderResponse>> getOrder(@Path("user_id")Long userId);
+
+    @GET("/api/v1/orders/{order_id}")
+    Call<OrderResponse> getOrderById(@Path("order_id")Long orderId);
 }

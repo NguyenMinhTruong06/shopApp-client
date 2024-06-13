@@ -2,7 +2,6 @@ package com.example.showappclient.repository.order;
 
 import com.example.showappclient.api.RetrofitClient;
 
-import com.example.showappclient.model.Order;
 import com.example.showappclient.model.request.OrderRequest;
 import com.example.showappclient.model.response.OrderResponse;
 
@@ -20,4 +19,10 @@ public class OrderRepositoryImpl implements OrderRepository{
     public Call<List<OrderResponse>> getOrder(Long userId) {
         return RetrofitClient.getApiService().getOrder(userId);
     }
+
+    @Override
+    public Call<OrderResponse> getOrderById(Long orderId) {
+        return RetrofitClient.getApiService().getOrderById(orderId);
+    }
+
 }

@@ -48,7 +48,7 @@ public class OrderFragment extends Fragment {
     private OrderViewModel orderViewModel;
 
     int userId = 0;
-    int orderCount = 0;
+
 
 
     private String shippingMethod = "Hoả tốc"; // Giá trị mặc định

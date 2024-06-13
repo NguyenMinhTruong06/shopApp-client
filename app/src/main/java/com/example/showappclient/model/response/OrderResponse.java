@@ -1,11 +1,13 @@
 package com.example.showappclient.model.response;
 
 import com.example.showappclient.model.Order;
+import com.example.showappclient.model.OrderDetail;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderResponse {
+public class OrderResponse implements Serializable {
 
     private int id;
     @SerializedName("user_id")
@@ -42,13 +44,21 @@ public class OrderResponse {
     @SerializedName("paymentMethod")
     private String paymentMethod;
     private boolean active;
-    private List<Order> orderDetails;
+    private List<OrderDetail> orderDetails;
 
-    public List<Order> getOrders() {
+    public List<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public List<OrderDetail> getOrders() {
+        return orderDetails;
+    }
+
+    public void setOrders(List<OrderDetail> orders) {
         this.orderDetails = orders;
     }
 

@@ -1,5 +1,7 @@
 package com.example.showappclient.ui.orderhistory;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -38,7 +40,7 @@ public class OrderHistoryViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<List<OrderResponse>> call, Throwable t) {
-
+                Log.d("ERR", t.getMessage());
             }
         });
     }

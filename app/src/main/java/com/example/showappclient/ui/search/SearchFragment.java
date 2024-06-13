@@ -26,7 +26,10 @@ import android.widget.Toast;
 import com.example.showappclient.R;
 import com.example.showappclient.model.Category;
 import com.example.showappclient.model.Product;
+import com.example.showappclient.ui.adapter.OnItemClickListener;
 import com.example.showappclient.ui.adapter.ProductListAdapter;
+import com.example.showappclient.ui.adapter.SearchProductListAdapter;
+import com.example.showappclient.ui.product.ProductFragment;
 
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class SearchFragment extends Fragment {
     private EditText editSearch;
     private ImageView imgSearch;
     private TextView tvCategory,tvSortPrice;
-    private ProductListAdapter productListAdapter;
+    private SearchProductListAdapter searchProductListAdapter;
     private RecyclerView recyclerViewProduct;
     private LinearLayout linearLayoutPrice,linearLayoutPriceT;
     private List<Category> categoryList;
@@ -71,8 +74,8 @@ public class SearchFragment extends Fragment {
         linearLayoutPriceT= view.findViewById(R.id.linear_product_new);
         linearLayoutPrice = view.findViewById(R.id.linear_product_price);
         recyclerViewProduct = view.findViewById(R.id.recycler_product);
-        productListAdapter = new ProductListAdapter();
-        recyclerViewProduct.setAdapter(productListAdapter);
+        searchProductListAdapter = new SearchProductListAdapter();
+        recyclerViewProduct.setAdapter(searchProductListAdapter);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mViewModel.getCategory();
@@ -90,7 +93,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 if (products != null) {
-                    productListAdapter.setData(products);
+                    searchProductListAdapter.setData(products);
                 } else {
                     // Xử lý khi không nhận được danh sách sản phẩm
                 }
@@ -127,15 +130,30 @@ public class SearchFragment extends Fragment {
         linearLayoutPriceT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productListAdapter.sortByPriceAscending();
+                searchProductListAdapter.sortByPriceAscending();
             }
         });
         linearLayoutPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                productListAdapter.sortByPriceDescending();
+                searchProductListAdapter.sortByPriceDescending();
             }
         });
+        searchProductListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Product product = searchProductListAdapter.getProduct(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", product);
+                ProductFragment fragment = new ProductFragment();
+                fragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, fragment)
+                        .addToBackStack("HomeFragment")
+                        .commit();
+            }
+        });
+
     }
     private void showCategoryMenu(View view, List<Category> categories) {
         PopupMenu popupMenu = new PopupMenu(getContext(), view);

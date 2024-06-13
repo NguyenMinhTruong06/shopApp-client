@@ -21,12 +21,17 @@ import com.example.showappclient.model.Order;
 import com.example.showappclient.model.Product;
 import com.example.showappclient.model.request.OrderRequest;
 import com.example.showappclient.model.response.OrderResponse;
+import com.example.showappclient.ui.adapter.OnItemClickListener;
 import com.example.showappclient.ui.adapter.OrderListHistoryAdapter;
+import com.example.showappclient.ui.orderdetailhistory.OrderDetailHistoryFragment;
+import com.example.showappclient.ui.product.ProductViewModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class OrderHistoryFragment extends Fragment {
     private RecyclerView recyclerView;
+    private OrderListHistoryAdapter orderListHistoryAdapter;
 
     private OrderHistoryViewModel mViewModel;
     private ImageView imgLeft;
@@ -34,6 +39,12 @@ public class OrderHistoryFragment extends Fragment {
 
     public static OrderHistoryFragment newInstance() {
         return new OrderHistoryFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory()).get(OrderHistoryViewModel.class);
     }
 
     @Override
@@ -47,33 +58,58 @@ public class OrderHistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         imgLeft = view.findViewById(R.id.image_left_order);
-        mViewModel = new OrderHistoryViewModel();
-        OrderListHistoryAdapter adapter = new OrderListHistoryAdapter();
+//        mViewModel = new OrderHistoryViewModel();
+        orderListHistoryAdapter = new OrderListHistoryAdapter();
+//        OrderListHistoryAdapter adapter = new OrderListHistoryAdapter();
         RecyclerView recyclerView = view.findViewById(R.id.recycler_order_history);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(orderListHistoryAdapter);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
            userId = Long.valueOf(bundle.getInt("userId"));
         }
-
-        mViewModel.getOrder(userId);
         mViewModel.orderLiveData.observe(getViewLifecycleOwner(), new Observer<List<OrderResponse>>() {
             @Override
             public void onChanged(List<OrderResponse> orderList) {
                 if (orderList != null) {
-                    adapter.setOrders(orderList); // Update adapter data
+                    orderListHistoryAdapter.setOrders(orderList); // Update adapter data
                 } else {
-                    // Handle network error or empty response
+
                 }
             }
         });
+        mViewModel.getOrder(userId);
+
 
         imgLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+        orderListHistoryAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                OrderResponse order = orderListHistoryAdapter.getOrder(position);
+//                Bundle bundle1 = new Bundle();
+//                bundle1.putSerializable("order", order);
+//                OrderDetailHistoryFragment orderDetailHistoryFragment = new OrderDetailHistoryFragment();
+//                orderDetailHistoryFragment.setArguments(bundle1);
+//                requireActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.root,orderDetailHistoryFragment)
+//                        .addToBackStack("OrderHistory")
+//                        .commit();
+                long orderId = order.getId(); // Lấy ID của đơn hàng
+                Bundle bundle1 = new Bundle();
+                bundle1.putLong("orderId", orderId); // Đặt ID vào Bundle
+                OrderDetailHistoryFragment orderDetailHistoryFragment = new OrderDetailHistoryFragment();
+                orderDetailHistoryFragment.setArguments(bundle1);
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root, orderDetailHistoryFragment)
+                        .addToBackStack("OrderHistory")
+                        .commit();
+
             }
         });
 
