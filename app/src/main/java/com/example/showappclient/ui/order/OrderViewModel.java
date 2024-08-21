@@ -47,6 +47,15 @@ public class OrderViewModel extends ViewModel {
     public MutableLiveData<Integer> orderIdLiveData = new MutableLiveData<>();
     public MutableLiveData<OrderDetailResponse> orderDetailReponseMutableLiveData = new MutableLiveData<>();
     MutableLiveData<Map<String, String>> message = new MutableLiveData<>();
+    private MutableLiveData<Boolean> paymentSuccess = new MutableLiveData<>();
+
+    public LiveData<Boolean> getPaymentSuccess() {
+        return paymentSuccess;
+    }
+
+    public void setPaymentSuccess(boolean success) {
+        paymentSuccess.setValue(success);
+    }
 
     // Getters for the LiveData
     public LiveData<String> getRecipientName() {

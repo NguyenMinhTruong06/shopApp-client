@@ -32,7 +32,7 @@ import java.util.List;
 public class OrderDetailHistoryFragment extends Fragment {
 
     private OrderDetailHistoryViewModel mViewModel;
-    private TextView tvOrderDate, tvAddress, tvPaymentMethod, tvStatus, tvShippingMethod, tvTotalPayment, tvOrderSum;
+    private TextView tvOrderDate, tvAddress, tvPaymentMethod, tvStatus, tvShippingMethod, tvTotalPayment, tvOrderShip;
 
     private ImageView imgLeft;
     private RecyclerView recyclerView;
@@ -56,24 +56,13 @@ public class OrderDetailHistoryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         tvAddress = view.findViewById(R.id.text_order_address);
         tvOrderDate = view.findViewById(R.id.text_order_date);
+        tvOrderShip = view.findViewById(R.id.text_order_sum);
         tvPaymentMethod = view.findViewById(R.id.text_payment_method);
         tvShippingMethod = view.findViewById(R.id.text_shipping_type);
         tvStatus = view.findViewById(R.id.text_status);
         tvTotalPayment = view.findViewById(R.id.text_total_money);
         mViewModel = new ViewModelProvider(this).get(OrderDetailHistoryViewModel.class);
 
-//        Bundle bundle = getArguments();
-//        if(bundle!=null){
-//            order =(OrderResponse) bundle.getSerializable("order");
-//            List<Order> orderList = order.getOrderDetails();
-//            orderProductListHistoryAdapter = new OrderProductListHistoryAdapter(orderList);
-//            recyclerView.setAdapter(orderProductListHistoryAdapter);
-//            tvStatus.setText(order.getStatus());
-//            tvTotalPayment.setText(order.getTotalMoney()+"");
-//            tvAddress.setText(order.getAddress());
-//            tvPaymentMethod.setText(order.getPaymentMethod());
-//            tvShippingMethod.setText(order.getShippingMethod());
-//            tvOrderDate.setText(order.getOrderDate());
 
 
         //     }
@@ -90,10 +79,11 @@ public class OrderDetailHistoryFragment extends Fragment {
                     // Cập nhật các TextView tương ứng với thông tin của đơn hàng
                     tvOrderDate.setText(tvOrderDate.getText() + orderResponse.getOrderDate());
                     tvAddress.setText(tvAddress.getText() + orderResponse.getAddress());
+                    tvOrderShip.setText("Ngày giao hàng: "+ orderResponse.getShippingDate());
                     tvPaymentMethod.setText(tvPaymentMethod.getText() + orderResponse.getPaymentMethod());
                     tvShippingMethod.setText(tvShippingMethod.getText() + orderResponse.getShippingMethod());
                     tvStatus.setText(tvStatus.getText() + orderResponse.getStatus());
-                    tvTotalPayment.setText(String.valueOf(orderResponse.getTotalMoney()));
+                    tvTotalPayment.setText(String.valueOf(orderResponse.getTotalMoney())+"₫");
 
                     // Cập nhật RecyclerView với danh sách sản phẩm của đơn hàng
                     List<OrderDetail> orderDetails = orderResponse.getOrderDetails();

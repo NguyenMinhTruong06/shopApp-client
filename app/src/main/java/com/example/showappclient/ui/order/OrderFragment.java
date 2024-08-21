@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +29,21 @@ import com.example.showappclient.localdb.entity.Cart;
 import com.example.showappclient.model.User;
 import com.example.showappclient.model.request.OrderDetailRequest;
 import com.example.showappclient.model.request.OrderRequest;
-import com.example.showappclient.model.response.OrderDetailResponse;
-import com.example.showappclient.model.response.OrderResponse;
+import com.example.showappclient.ui.adapter.CartListAdapter;
 import com.example.showappclient.ui.adapter.OrderListAdapter;
 import com.example.showappclient.ui.cart.CartFragment;
 import com.example.showappclient.ui.cart.CartViewModel;
+import com.example.showappclient.util.AlertMessageViewer;
+import com.example.showappclient.zalo.Api.CreateOrder;
+
+import org.json.JSONObject;
 
 import java.util.List;
+
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class OrderFragment extends Fragment {
     private List<Cart> selectedProducts;
@@ -48,6 +58,7 @@ public class OrderFragment extends Fragment {
     private OrderViewModel orderViewModel;
 
     int userId = 0;
+    private CartListAdapter cartListAdapter;
 
 
 
@@ -87,6 +98,30 @@ public class OrderFragment extends Fragment {
                 orderViewModel.setRecipientInfo(newRecipientInfo, newRecipientPhone, newRecipientAddress);
             }
         });
+//        getParentFragmentManager().setFragmentResultListener("payment_result", this, new FragmentResultListener() {
+//            @Override
+//            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+//                String paymentStatus = result.getString("payment_status");
+//                if ("success".equals(paymentStatus)) {
+//                    Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+//                    // Xử lý logic khi thanh toán thành công
+//                } else if ("canceled".equals(paymentStatus)) {
+//                    Toast.makeText(getContext(), "Khách hàng hủy thanh toán", Toast.LENGTH_SHORT).show();
+//                    // Xử lý logic khi thanh toán bị hủy
+//                } else if ("error".equals(paymentStatus)) {
+//                    String errorCode = result.getString("error_code");
+//                    Toast.makeText(getContext(), "Thanh toán thất bại: " + errorCode, Toast.LENGTH_SHORT).show();
+//                    // Xử lý logic khi thanh toán thất bại
+//                }
+//            }
+//        });
+        StrictMode.ThreadPolicy policy = new
+                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        // ZaloPay SDK Init
+        ZaloPaySDK.init(553, Environment.SANDBOX);
+
     }
 
     @Override
@@ -130,7 +165,7 @@ public class OrderFragment extends Fragment {
                         break;
                     case R.id.radiobtn_economical:
                         shippingMethod = "Tiết kiệm";
-                        tShip = 20000;
+                        tShip = 1;
                         break;
                 }
                 tvShipPrice.setText(String.valueOf(tShip) + "₫");
@@ -164,36 +199,17 @@ public class OrderFragment extends Fragment {
 
 
         tvPayment.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                String name = tvName.getText().toString();
-                String phone = tvPhone.getText().toString();
-                String address = tvAddress.getText().toString();
-                String priceString = tvTotalPayment.getText().toString();
-                priceString = priceString.replace("₫", "");
-                Float totalMoney = Float.valueOf(priceString);
+                if (paymentMethod.equals("ZaloPay"))
+                {
+                    zalopayPayment();
+                }
+                else if(paymentMethod.equals("MoMo")){
 
-                orderViewModel.createOrder(new OrderRequest(name, userId, phone, address, shippingMethod, totalMoney, paymentMethod));
-
-                // Observer mới để xử lý khi có orderId mới
-                Observer<Integer> orderIdObserver = new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer orderId) {
-                        if (orderId != null) {
-                            id = orderId;
-                            createOrderDetail(orderId);
-                            // Sau khi sử dụng, loại bỏ Observer và đặt lại giá trị orderId
-                            orderViewModel.orderIdLiveData.removeObserver(this);
-                            orderViewModel.orderIdLiveData.setValue(null);
-                        }
-                    }
-                };
-
-                // Đảm bảo rằng không có Observer cũ còn tồn tại
-                orderViewModel.orderIdLiveData.removeObservers(getViewLifecycleOwner());
-                // Bắt đầu quan sát orderIdLiveData
-                orderViewModel.orderIdLiveData.observe(getViewLifecycleOwner(), orderIdObserver);
+                }
+                else{
+                createOrderAfterPayment();}
             }
         });
 
@@ -217,9 +233,13 @@ public class OrderFragment extends Fragment {
         imageLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                orderListAdapter.clear();
                 requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
+
+
+
 
     }
     @Override
@@ -241,21 +261,26 @@ public class OrderFragment extends Fragment {
                 orderViewModel.createOrderDetail(new OrderDetailRequest(orderId, productId,(float) price, quantity, (float) totalMoneyProduct, option,productName ));
                 orderViewModel.apiCallSuccess.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                     public void onChanged(Boolean success) {
+
                         if (success != null && success ) {
                             mViewModel.deleteFromCart(cartItem);
                             MainMenuFragment cartFragment = new MainMenuFragment();
                             requireActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.root, cartFragment)
                                     .commit();
-                            Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
 
-                        } else {
+                        }
+                        else {
                             CartFragment cartFragment = new CartFragment();
                             requireActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.root, cartFragment)
                                     .commit();
-                            Toast.makeText(getContext(), "Lỗi khi thanh toán", Toast.LENGTH_SHORT).show();
+
                         }
+                        {
+                            Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
             }
@@ -293,8 +318,25 @@ public class OrderFragment extends Fragment {
                 tvAddress.setText(newAddress);
             }
         });
+        orderViewModel.getPaymentSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean success) {
+                if (success != null) {
+                    if (success) {
+                        // Xử lý khi thanh toán thành công
+                        Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                        createOrderAfterPayment();
+                    } else {
+                        // Xử lý khi thanh toán thất bại
+                        Toast.makeText(requireContext(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
 
     }
+
 
     private void showChangeRecipientDialog() {
 
@@ -306,7 +348,106 @@ public class OrderFragment extends Fragment {
         if (tShip != 0 && tvTotalProduct.getText() != null) { // Kiểm tra tShip và tvTotalProduct có khác 0 và null hay không
             float totalPrice = Float.parseFloat(tvTotalProduct.getText().toString().replace("₫", "").trim()); // Lấy giá trị tổng giá sản phẩm
             float totalPricePayment = tShip + totalPrice;
-            tvTotalPayment.setText(totalPricePayment + "₫");
+
+            tvTotalPayment.setText((int)totalPricePayment + "₫");
         }
     }
+    public void createOrderAfterPayment(){
+        String name = tvName.getText().toString();
+        String phone = tvPhone.getText().toString();
+        String address = tvAddress.getText().toString();
+        String priceString = tvTotalPayment.getText().toString();
+        priceString = priceString.replace("₫", "");
+        Float totalMoney = Float.valueOf(priceString);
+
+        orderViewModel.createOrder(new OrderRequest(name, userId, phone, address, shippingMethod, totalMoney, paymentMethod));
+
+        // Observer mới để xử lý khi có orderId mới
+        Observer<Integer> orderIdObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer orderId) {
+                if (orderId != null) {
+                    id = orderId;
+                    createOrderDetail(orderId);
+                    // Sau khi sử dụng, loại bỏ Observer và đặt lại giá trị orderId
+                    orderViewModel.orderIdLiveData.removeObserver(this);
+                    orderViewModel.orderIdLiveData.setValue(null);
+                }
+            }
+        };
+
+        // Đảm bảo rằng không có Observer cũ còn tồn tại
+        orderViewModel.orderIdLiveData.removeObservers(getViewLifecycleOwner());
+        // Bắt đầu quan sát orderIdLiveData
+        orderViewModel.orderIdLiveData.observe(getViewLifecycleOwner(), orderIdObserver);
+    }
+
+    private void zalopayPayment(){
+        String token = "";
+        CreateOrder orderApi = new CreateOrder();
+        try {
+            String amount = tvTotalPayment.getText().toString().replaceAll("\\D", "");
+            JSONObject data = orderApi.createOrder(amount);
+            Log.d("CreateOrderResponse", data.toString());
+            String code = data.getString("returncode");
+//            Toast.makeText(requireContext(), "Đang chuyển sang ứng dụng zalopay", Toast.LENGTH_SHORT).show();
+            if (code.equals("1")) {
+                token = data.getString("zptranstoken"); // Mã zp_trans_token của đơn hàng thanh toán
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Gọi hàm thanh toán
+        ZaloPaySDK.getInstance().payOrder(requireActivity(), token, "zalopayment://app", new PayOrderListener() {
+
+
+            @Override
+            public void onPaymentSucceeded(String s, String s1, String s2) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        AlertMessageViewer.showAlertZalopay(
+                                requireContext(),
+                                "Thanh toán thành công!",
+                                "TransactionId: " + s + " - TransToken: " + s1
+                        );
+                        createOrderAfterPayment();
+                    });
+                }
+
+            }
+
+            @Override
+            public void onPaymentCanceled(String s, String s1) {
+                AlertMessageViewer.showAlertZalopay(
+                        requireContext(),
+                        "Khách hàng hủy thanh toán bằng ZaloPay",
+                        "zpTransToken: " + s
+                );
+
+            }
+
+            @Override
+            public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
+                AlertMessageViewer.showAlertZalopay(
+                        requireContext(),
+                        "Thanh toán thất bại!",
+                        "ZaloPayErrorCode: " + zaloPayError.toString() + "\nTransToken: " + s
+                );
+
+            }
+        });
+    }
+
+
+
+public void handleNewIntent(Intent intent) {
+    ZaloPaySDK.getInstance().onResult(intent);
+
+    }
+
 }
+
+
+
+

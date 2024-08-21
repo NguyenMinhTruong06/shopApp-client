@@ -36,6 +36,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         Cart cart = selectedProducts.get(position);
         holder.bind(cart);
     }
+    public void clear() {
+        selectedProducts.clear();
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

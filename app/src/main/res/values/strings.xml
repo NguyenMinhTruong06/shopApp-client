@@ -59,10 +59,10 @@
     <string name="supplier">Mô tả:</string>
     <string name="year"></string>
     <string name="product">Sản Phẩm</string>
-    <string name="createdOn">Ngày đặt hàng :</string>
-    <string name="orderAddress">Địa chỉ giao hàng :</string>
-    <string name="orderQuantity">Tổng số lượng :</string>
-    <string name="textTotal">Tổng tiền:</string>
+    <string name="createdOn">Ngày đặt hàng: </string>
+    <string name="orderAddress">Địa chỉ giao hàng: </string>
+    <string name="orderQuantity">Ngày giao hàng: </string>
+    <string name="textTotal">Tổng tiền: </string>
     <string name="textStatus">Tình tạng đơn hàng:</string>
     <string name="language">Ngôn Ngữ: Tiếng Việt</string>
     <string name="quantity">Số lượng còn lại</string>

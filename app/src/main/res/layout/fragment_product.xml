@@ -182,16 +182,7 @@
                 app:layout_constraintStart_toStartOf="@id/text_info"
                 app:layout_constraintTop_toBottomOf="@id/text_info" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/text_ncc"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/supplier"-->
-<!--                android:textColor="@color/secondaryDeep"-->
-<!--                android:textSize="14dp"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/text_info"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/text_ma" />-->
+
 
             <TextView
                 android:id="@+id/text_author"
@@ -205,28 +196,22 @@
                 app:layout_constraintTop_toBottomOf="@id/text_ma" />
 
 
-<!--            <TextView-->
-<!--                android:id="@+id/text_name_author"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/colorAuth"-->
-<!--                android:textSize="14dp"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/text_ncc"-->
-<!--                app:layout_constraintStart_toEndOf="@id/text_author"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/text_author" />-->
-
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="20dp"
                 android:id="@+id/recyclerView_options"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_author" />
+                app:layout_constraintTop_toBottomOf="@+id/text_author"
+                app:layout_constraintVertical_bias="0.0" />
+
             <TextView
                 android:id="@+id/text_ncc"
                 android:layout_width="0dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_height="wrap_content"
                 android:text="@string/supplier"
                 android:textColor="@color/secondaryDeep"

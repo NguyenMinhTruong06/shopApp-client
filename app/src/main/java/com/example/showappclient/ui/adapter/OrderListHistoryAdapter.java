@@ -24,9 +24,7 @@ public class OrderListHistoryAdapter extends RecyclerView.Adapter<OrderListHisto
         this.orders = orders;
         notifyDataSetChanged();
     }
-//    public interface OnItemClickListener {
-//        void onItemClick(int position);
-//    }
+
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
@@ -83,7 +81,7 @@ public class OrderListHistoryAdapter extends RecyclerView.Adapter<OrderListHisto
 
         public void bind(OrderResponse order) {
             tvOrderId.setText("Mã đơn hàng: "+String.valueOf(order.getId()));
-            tvPrice.setText("Tổng tiền: "+String.valueOf(order.getTotalMoney()));
+            tvPrice.setText("Tổng tiền: "+String.valueOf(order.getTotalMoney())+"₫");
             tvStatus.setText("Trạng thái: "+order.getStatus());
             tvPaymentMethod.setText("Phương thức thanh toán: "+order.getPaymentMethod());
         }

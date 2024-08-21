@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
-//      handleLoadData();
+
 //        setupScrollListener();
         recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -153,28 +153,28 @@ public class HomeFragment extends Fragment {
         });
 
     }
-    private void setupScrollListener() {
-        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if (!isLoading) {
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                            && firstVisibleItemPosition >= 0) {
-                        currentPage++;
-                        isLoading = true;
-                        mViewModel.getAllProduct(5, currentPage);
-                    }
-                }
-            }
-        });
-    }
+//    private void setupScrollListener() {
+//        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                int visibleItemCount = layoutManager.getChildCount();
+//                int totalItemCount = layoutManager.getItemCount();
+//                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+//
+//                if (!isLoading) {
+//                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+//                            && firstVisibleItemPosition >= 0) {
+//                        currentPage++;
+//                        isLoading = true;
+//                        mViewModel.getAllProduct(5, currentPage);
+//                    }
+//                }
+//            }
+//        });
+//    }
 
 
 
@@ -199,41 +199,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-//    private void handleLoadData() {
-//        recyclerViewProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                Log.d("curentPage", currentPage + "");
-//
-//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-//                int totalItemCount = layoutManager.getItemCount();
-//                int visibleItemCount = layoutManager.getChildCount();
-//                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-//
-//                if (isLoading==false && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
-//
-//                    currentPage++;
-//                    Log.d("HomeFragment", "Loading page " + currentPage);
-//                    mViewModel.getAllProduct(5, currentPage);
-//                    isLoading = true;
-//                }
-//
-//
-//            }
-//        });
-//    }
-
-
     @Override
     public void onResume() {
         super.onResume();
-//        currentPage = 0;
-//        isLoading = true;
-//        Log.d("HomeFragment", "onResume called");
-//        mViewModel.getAllProduct(5, currentPage);
 
     }
 }

@@ -72,7 +72,6 @@ public class ProfileFragment extends Fragment {
         textOrderHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("userId",userId);

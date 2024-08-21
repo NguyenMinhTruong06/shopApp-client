@@ -27,7 +27,7 @@ public class SignupViewModel extends ViewModel {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if(response.isSuccessful()){
-                    String ok = "ok";
+                    String ok = "Đăng ký thàng công";
                     Map<String, String> data = new HashMap<>();
                     data.put("successful",ok);
                     message.postValue(data);

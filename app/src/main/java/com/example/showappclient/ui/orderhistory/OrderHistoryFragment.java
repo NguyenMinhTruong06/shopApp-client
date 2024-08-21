@@ -92,14 +92,7 @@ public class OrderHistoryFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 OrderResponse order = orderListHistoryAdapter.getOrder(position);
-//                Bundle bundle1 = new Bundle();
-//                bundle1.putSerializable("order", order);
-//                OrderDetailHistoryFragment orderDetailHistoryFragment = new OrderDetailHistoryFragment();
-//                orderDetailHistoryFragment.setArguments(bundle1);
-//                requireActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.root,orderDetailHistoryFragment)
-//                        .addToBackStack("OrderHistory")
-//                        .commit();
+
                 long orderId = order.getId(); // Lấy ID của đơn hàng
                 Bundle bundle1 = new Bundle();
                 bundle1.putLong("orderId", orderId); // Đặt ID vào Bundle

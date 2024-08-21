@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import java.util.List;
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartViewHolder>  {
 
     private List<Cart> productList = new ArrayList<>();
+
     private AppDatabase appDatabase;
     private CartFragment cartFragment;
 
@@ -58,10 +60,14 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         Cart cart = productList.get(position);
         holder.bind(cart);
 
+
     }
     public void setData(List<Cart> carts ) {
         this.productList.clear(); // Xóa dữ liệu hiện tại trong danh sách sản phẩm
-        this.productList.addAll(carts); // Thêm tất cả sản phẩm mới vào danh sách
+        this.productList.addAll(carts);// Thêm tất cả sản phẩm mới vào danh sách
+
+
+
         notifyDataSetChanged();
     }
 
@@ -80,6 +86,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     public void remove(Cart cart) {
     }
+
 
 
 
@@ -139,12 +146,13 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
                     }
                 }
             });
+
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if (currentProduct != null) {
                         currentProduct.setSelected(b);
-                        cartFragment.updateSelectedProducts(currentProduct, b);// Đảm bảo Cart có phương thức setSelected
+                        cartFragment.updateSelectedProducts(currentProduct, b);
                     }
                     if (onItemCheckedChangeListener != null) {
                         onItemCheckedChangeListener.onItemCheckedChange(getAdapterPosition(), b);
@@ -176,7 +184,9 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
                     .centerCrop()
                     .into(imgProduct);
 
+            checkBox.setChecked(false);
         }
+
 
         public void add(Cart cart) {
             int quantity = cart.getQuantity() + 1;
@@ -184,7 +194,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             tvValue.setText(String.valueOf(quantity));
             appDatabase.cartDao().update(cart);
             cartFragment.onResume();
-
+            Toast.makeText(cartFragment.requireContext(), "Thêm sản phẩm vào giỏ hàng thành công",Toast.LENGTH_SHORT).show();
         }
 
         public void remove(Cart cart) {
@@ -213,5 +223,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             }
             return total;
         }
+
     }
 }

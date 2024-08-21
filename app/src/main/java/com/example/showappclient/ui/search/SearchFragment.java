@@ -43,7 +43,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerViewProduct;
     private LinearLayout linearLayoutPrice,linearLayoutPriceT;
     private List<Category> categoryList;
-    private int selectedCategoryId =-1;
+    private int selectedCategoryId =0;
 
 
 
@@ -104,16 +104,16 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                String keyword = editSearch.getText().toString();
-                if (selectedCategoryId != -1) {
-                    int limit =10;
+//                if (selectedCategoryId != -1) {
+                    int limit =20;
                     int page =0;
                     // Gọi API getAllProducts với id của Category được chọn
                     mViewModel.fetchProductsByCategoryId(limit,page,keyword,selectedCategoryId);
 
 
-                } else {
-                    Toast.makeText(getContext(), "Please select a category first", Toast.LENGTH_SHORT).show();
-                }
+//                } else {
+//                    Toast.makeText(getContext(), "Please select a category first", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });

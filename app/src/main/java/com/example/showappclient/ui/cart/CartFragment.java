@@ -69,6 +69,7 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
     public void onItemCheckedChange(int position, boolean isChecked) {
         Cart currentProduct = cartListAdapter.getProduct(position);
         double itemPrice = currentProduct.getQuantity() * currentProduct.getPrice();
+
         currentProduct.setSelected(isChecked);
 
         if (isChecked) {
@@ -139,9 +140,10 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
                 OrderFragment orderFragment = new OrderFragment();
                 orderFragment.setArguments(bundle);
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.root, orderFragment)
-                        .addToBackStack("ProfileFragment")
+                        .replace(R.id.root, orderFragment,"OrderFragmentTag")
+                        .addToBackStack("OrderFragment")
                         .commit();
+
 
             }
         });
@@ -174,13 +176,14 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
                 cartListAdapter.setData(carts);
             }
         });
-        onResume();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         cartViewModel.getAllProductInCart();
+
     }
     public void updateSelectedProducts(Cart cart, boolean isChecked) {
         if (isChecked) {
@@ -189,5 +192,6 @@ public class CartFragment extends Fragment implements CartListAdapter.OnItemChec
             selectedProducts.remove(cart);
         }
     }
+
 
 }

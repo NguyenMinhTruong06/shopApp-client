@@ -66,7 +66,7 @@ public class OrderProductListHistoryAdapter extends RecyclerView.Adapter<OrderPr
 
         public void bind(OrderDetail orderDetail) {
             tvName.setText("Tên sản phẩm: "+orderDetail.getProductName());
-            tvPrice.setText("Giá tiền: "+orderDetail.getPrice());
+            tvPrice.setText("Giá tiền: "+orderDetail.getPrice()+"₫");
             tvOption.setText("Cấu hình: "+orderDetail.getOption());
             tvQuantity.setText("Số lượng: "+orderDetail.getNumberOfProducts());
         }
